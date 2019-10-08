@@ -26,14 +26,14 @@ export const signInWithGoogle = () => auth.signInWithPopup(provider);
 
 export const createuserProfileDocument = async (userAuth, additionalData) => {
     if (!userAuth) return;
-    const docRef = firestore.doc(`users/${userAuth.uid}`);
-    const docSnapshot = await docRef.get();
+    const userRef = firestore.doc(`users/${userAuth.uid}`);
+    const userSnapshot = await userRef.get();
 
-    if (!docSnapshot.exists) {
+    if (!userSnapshot.exists) {
         const { email, displayName } = userAuth;
         const createdAt = new Date();
         try {
-            docRef.set({
+            userRef.set({
                 email,
                 displayName,
                 createdAt,
@@ -44,8 +44,7 @@ export const createuserProfileDocument = async (userAuth, additionalData) => {
             console.log('error while saving user', error.message);
         }
     }
-    console.log(docSnapshot);
-    return docRef;
+    return userRef;
 };
 
 export default firebase;

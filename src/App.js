@@ -19,8 +19,17 @@ class App extends React.Component {
 
   componentDidMount() {
     // auth.onAuthStateChanged gives us back a function to unsubscribe
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(async user =>
-      createuserProfileDocument(user)
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+      if (userAuth) {
+        const userRef = await createuserProfileDocument(userAuth);
+        // Get realtime updates when the user-info changes, but receives the inital state if the user was registered before
+        userRef.onSnapshot(snapshot => {
+          this.setState({ currentUser: { id: snapshot.id, ...snapshot.data() } }, () => console.log(this.state));
+        });
+      } else {
+        this.setState({ currentUser: userAuth });
+      }
+    }
     );
 
   }
