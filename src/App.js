@@ -8,7 +8,7 @@ import './App.css';
 import ShopPage from './pages/shop/shopPage.component';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up-page/sign-in-and-sign-up-page';
 import CheckoutPage from './pages/checkout/checkout.component';
-import HomePage from './pages/homePage/homepage.component';
+import Home from './pages/homePage/homepage.component';
 
 import Header from './components/header/header.component';
 
@@ -48,7 +48,7 @@ class App extends React.Component {
             <div>
                 <Header />
                 <Switch>
-                    <Route exact path='/' component={HomePage} />
+                    <Route exact path='/' component={Home} />
                     <Route path='/shop' component={ShopPage} />
                     <Route exact path='/checkout' component={CheckoutPage} />
                     <Route
