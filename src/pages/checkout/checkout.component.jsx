@@ -5,32 +5,35 @@ import { createStructuredSelector } from 'reselect';
 import StripeCheckoutButton from '../../components/stripe-button/stripe-button.component';
 import { selectCartItems, selectTotalPrice } from '../../redux/cart/cart.selector';
 import CheckoutItem from '../../components/checkout-item/checkout-item.component';
-import './checkout.styles.scss';
+import {
+    CheckoutPageContainer, CheckoutHeaderContainer,
+    HeaderBlock, TotalContainer, TestWarningContainer
+} from './checkout.styles';
 
 const CheckoutPage = ({ cartItems, totalPrice }) => (
-    <div className='checkout-page'>
-        <div className='checkout-header'>
-            <div className='header-block'><span>Product</span></div>
-            <div className='header-block'><span>Desciprtion</span></div>
-            <div className='header-block'><span>Quantity</span></div>
-            <div className='header-block'><span>Price</span></div>
-            <div className='header-block'><span>Remove</span></div>
-        </div>
+    <CheckoutPageContainer>
+        <CheckoutHeaderContainer>
+            <HeaderBlock><span>Product</span></HeaderBlock>
+            <HeaderBlock><span>Desciprtion</span></HeaderBlock>
+            <HeaderBlock><span>Quantity</span></HeaderBlock>
+            <HeaderBlock><span>Price</span></HeaderBlock>
+            <HeaderBlock><span>Remove</span></HeaderBlock>
+        </CheckoutHeaderContainer>
         {cartItems.map(item =>
             <CheckoutItem key={item.id} cartItem={item} />
         )}
 
-        <div className='total'>
+        <TotalContainer>
             <span>TOTAL: $
             {totalPrice}</span>
-        </div>
-        <div className="test-warning">
+        </TotalContainer>
+        <TestWarningContainer>
             *Please use the following test credit card for payments*
          <br />
             4242 4242 4242 4242-Exp:01/20, CVC:123
-     </div>
+     </TestWarningContainer>
         <StripeCheckoutButton price={totalPrice} />
-    </div>
+    </CheckoutPageContainer>
 );
 
 

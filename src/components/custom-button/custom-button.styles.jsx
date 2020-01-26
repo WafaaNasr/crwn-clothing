@@ -5,6 +5,13 @@ import styled, { css } from 'styled-components';
 export const buttonStyles = css`
     background-color: black;
     color: white;
+    border: none;
+
+    &:hover {
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+    }
 `;
 
 export const googleSignInStyles = css`    
@@ -46,13 +53,9 @@ export const CustomButtonContainer = styled.button`
     text-transform: uppercase;
     font-family: 'Open Sans Condensed';
     font-weight: bolder;
-    border: none;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
 
-    &:hover {
-    background-color: white;
-    color: black;
-    border: 1px solid black;
-    }
     ${getButtonStyles}
 `;
