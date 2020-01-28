@@ -12,7 +12,10 @@ import CheckoutPage from './pages/checkout/checkout.component';
 
 import Header from './components/header/header.component';
 
-import { auth, createuserProfileDocument } from './firebase/firebase.utilities';
+import {
+    auth,
+    createuserProfileDocument
+} from './firebase/firebase.utilities';
 
 import { setCurrentUser } from './redux/user/user.action';
 import { selectCurrentUser } from './redux/user/user.selector';

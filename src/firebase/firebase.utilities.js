@@ -46,5 +46,36 @@ export const createuserProfileDocument = async (userAuth, additionalData) => {
     }
     return userRef;
 };
+export const convertCollectionsToMap = (collections) => {
 
-export default firebase;
+    const transformedCollections = collections.docs.map(doc => {
+        const { title, items } = doc.data();
+
+        return {
+            routeName: encodeURI(title.toLowerCase()),
+            id: doc.id,
+            title,
+            items
+        }
+    });
+    return transformedCollections.reduce((acc, coll) => {
+        acc[coll.title.toLowerCase()] = coll;
+        return acc;
+    }, {});
+}
+
+
+export const createCollectionsAndDocuments = async (collectionKey, docsToAdd) => {
+    const collRef = firestore.collection(collectionKey);
+    // Firebase can only call one set() a time.
+    // even if we called collRef.set(array) it's going to call one at a time also
+    // so we should use batch() as a transaction
+
+    const batch = firestore.batch();
+    docsToAdd.forEach(({ items, title }) => {
+        const docRef = collRef.doc();// if id arg is null so it will return new objects;
+        batch.set(docRef, { items, title });
+    });
+    return await batch.commit();
+}
+export default firebase;    
