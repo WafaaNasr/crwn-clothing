@@ -63,8 +63,6 @@ export const convertCollectionsToMap = (collections) => {
         return acc;
     }, {});
 }
-
-
 export const createCollectionsAndDocuments = async (collectionKey, docsToAdd) => {
     const collRef = firestore.collection(collectionKey);
     // Firebase can only call one set() a time.
@@ -77,5 +75,13 @@ export const createCollectionsAndDocuments = async (collectionKey, docsToAdd) =>
         batch.set(docRef, { items, title });
     });
     return await batch.commit();
+}
+export const checkIfUserAuthenticated = () => {
+    return new Promise((resolve, reject) => {
+        const unsubscribeAuth = auth.onAuthStateChanged(user => {
+            unsubscribeAuth();
+            resolve(user);
+        }, error => reject(error));
+    });
 }
 export default firebase;    

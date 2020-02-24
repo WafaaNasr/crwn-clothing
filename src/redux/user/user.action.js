@@ -1,4 +1,3 @@
-
 import UserActionTypes from './user.types';
 
 
@@ -20,3 +19,6 @@ export const signInFailure = error => ({
     payload: error
 });
 
+export const checkUserSesssion = () => ({
+    type: UserActionTypes.CHECK_USER_SESSION
+});
