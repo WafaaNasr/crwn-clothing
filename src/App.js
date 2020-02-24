@@ -12,34 +12,13 @@ import CheckoutPage from './pages/checkout/checkout.component';
 
 import Header from './components/header/header.component';
 
-import {
-    auth,
-    createuserProfileDocument
-} from './firebase/firebase.utilities';
-
-import { setCurrentUser } from './redux/user/user.action';
 import { selectCurrentUser } from './redux/user/user.selector';
 
 class App extends React.Component {
     unsubscribeFromAuth = null;
 
     componentDidMount() {
-        const { setCurrentUser } = this.props;
-
-        this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
-            if (userAuth) {
-                const userRef = await createuserProfileDocument(userAuth);
-
-                userRef.onSnapshot(snapShot => {
-                    setCurrentUser({
-                        id: snapShot.id,
-                        ...snapShot.data()
-                    });
-                });
-            }
-
-            setCurrentUser(userAuth);
-        });
+   
     }
 
     componentWillUnmount() {
@@ -75,11 +54,8 @@ const mapStateToProps = createStructuredSelector({
     currentUser: selectCurrentUser
 });
 
-const mapDispatchToProps = dispatch => ({
-    setCurrentUser: user => dispatch(setCurrentUser(user))
-});
+
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
+    mapStateToProps
 )(App);
