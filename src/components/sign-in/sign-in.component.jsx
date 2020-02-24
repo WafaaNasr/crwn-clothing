@@ -3,28 +3,19 @@ import { connect } from 'react-redux';
 
 import FormInput from '../form-input/form-input.component';
 import CustomButton from "../custom-button/custom-button.component";
-import { googleSignInStart } from '../../redux/user/user.action';
+import { googleSignInStart, emailSignInStart } from '../../redux/user/user.action';
 
 import { SignInContainer, ButtonContainer } from './sign-in.styles';
-import { auth } from '../../firebase/firebase.utilities';
 
-const SignIn = ({ signInWithGoogle }) => {
+const SignIn = ({ signInWithGoogle, signInWithEmail }) => {
 
     const [userCredentials, setUserCredentials] = useState({ email: '', password: '' });
     const { email, password } = userCredentials;
 
     const handleSubmit = async event => {
         event.preventDefault();
-
         if (!(email && password)) return;
-        try {
-            await auth.signInWithEmailAndPassword(email, password);
-            setUserCredentials({ email: '', password: '' });
-        }
-        /// TODO: ADD Logger Like Sentry
-        catch (error) {
-            console.log(error);
-        }
+        signInWithEmail(email, password);
     }
     const handleChange = event => {
         const { name, value } = event.target;
@@ -46,5 +37,8 @@ const SignIn = ({ signInWithGoogle }) => {
         </SignInContainer>
     )
 }
-const mapDispatchToProps = dispatch => ({ signInWithGoogle: () => dispatch(googleSignInStart()) })
+const mapDispatchToProps = dispatch => ({
+    signInWithGoogle: () => dispatch(googleSignInStart()),
+    signInWithEmail: (email, password) => dispatch(emailSignInStart({ email, password }))
+})
 export default connect(null, mapDispatchToProps)(SignIn);
