@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { checkUserSesssion } from './redux/user/user.action';
 
-import './App.css';
-
 import HomePage from './pages/homePage/homepage.component';
 import ShopPage from './pages/shop/shopPage.component';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up-page/sign-in-and-sign-up-page';
@@ -13,16 +11,19 @@ import CheckoutPage from './pages/checkout/checkout.component';
 
 import Header from './components/header/header.component';
 
+import GlobalStyle from './globalStyles';
+
 import { selectCurrentUser } from './redux/user/user.selector';
 
-const App = ({ checkUserSesssion , currentUser}) => {
-    
-    useEffect(() => { 
+const App = ({ checkUserSesssion, currentUser }) => {
+
+    useEffect(() => {
         checkUserSesssion();
-     }, [checkUserSesssion]);
+    }, [checkUserSesssion]);
 
     return (
         <div>
+            <GlobalStyle />
             <Header />
             <Switch>
                 <Route exact path='/' component={HomePage} />

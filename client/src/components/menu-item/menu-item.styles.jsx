@@ -22,8 +22,12 @@ export const MenuItemComponent = styled.div`
     &:last-child {
       margin-left: 7.5px;
     }
-    ${({ size }) => size === 'large' ?
-        'height: 380px' : ''}
+    height: ${({size})=> size?  '380px': '240px'};
+    
+    @media screen and (max-width:800px){
+        height: 240px;
+
+    }
 `;
 
 
