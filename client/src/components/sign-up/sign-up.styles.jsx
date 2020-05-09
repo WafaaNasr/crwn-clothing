@@ -8,4 +8,7 @@ export const SignUpContainer = styled.div`
     .title {
         margin: 10px 0;
     }
+    @media screen and (max-width:800px) {
+        padding:0 8px;
+  }
 `;
